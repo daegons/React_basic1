@@ -5,16 +5,13 @@ function App() {
   // const [num1, setNum1] = useState("후평똥 맛집");
   // const [num2, setNum2] = useState("퇴계동 맛집");
   // const [num3, setNum3] = useState("react 독학");
-  const [num, setNum] = useState([
-    "후평동 맛집",
-    "퇴계동 맛집",
-    "자바스크립트 독학",
-  ]);
+  const [num, setNum] = useState(["후평동 맛집", "퇴계동 맛집", "자바스크립트 독학"]);
 
   const [likeCounter, setLikeCounter] = useState(0);
   const [unLikeCounter, setUnLikeCounter] = useState(0);
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState(0);
+  const [input, setInput] = useState("");
 
   const likeHandle = () => {
     setLikeCounter(likeCounter + 1);
@@ -61,13 +58,37 @@ function App() {
             <span onClick={unLikeHandle}>👎🏻</span>
             {unLikeCounter}
             <p>2월 17일 작성</p>
+            <button
+              onClick={() => {
+                let copy = [...num];
+                copy.splice(i, 1);
+                setNum(copy);
+              }}
+            >
+              삭제
+            </button>
           </div>
         );
       })}
 
-      {modal === true ? (
-        <Modal title={title} onChange={onChangeHandle} num={num} />
-      ) : null}
+      <input
+        type="text"
+        onChange={(e) => {
+          setInput(e.target.value);
+          console.log(input);
+        }}
+      />
+      <button
+        onClick={() => {
+          let copy = [...num];
+          copy.unshift(input);
+          setNum(copy);
+        }}
+      >
+        입력완료
+      </button>
+
+      {modal === true ? <Modal title={title} onChange={onChangeHandle} num={num} /> : null}
     </div>
   );
 }
